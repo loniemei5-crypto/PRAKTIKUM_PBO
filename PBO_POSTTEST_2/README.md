@@ -3,505 +3,129 @@
 **NIM:** 128  
 **Mata Kuliah:** Pemrograman Berorientasi Objek  
 **Judul Program:** Sistem Pendataan Barang di Kamar Kos
+# Sistem Pendataan Barang di Kamar Kos
 
----
+## 1. Judul dan Deskripsi Program
 
-## 1. Deskripsi Program
+**Sistem Pendataan Barang di Kamar Kos** merupakan program berbasis Python yang menerapkan konsep Object-Oriented Programming (OOP) untuk melakukan pendataan dan pengelolaan barang di kamar kos. Program ini dirancang untuk menampilkan informasi barang, mencari barang berdasarkan kode, menambahkan barang, memperbarui stok, mengelola catatan kamar, serta menghapus barang dari daftar.
 
-Sistem Pendataan Barang di Kamar Kos merupakan program berbasis Python yang digunakan untuk melakukan pendataan barang yang terdapat di dalam kamar kos.
+Program menggunakan beberapa kelas, yaitu `Barang`, `BarangElektronik`, `BarangPribadi`, `Kamar`, `CatatanBarang`, `Penghuni`, `LaporanTeks`, dan `NotifikasiKonsol`. Program berjalan secara otomatis menggunakan data awal yang telah ditentukan di dalam kode tanpa menggunakan fungsi `input()`.
 
-Program ini dikembangkan dengan menerapkan konsep Pemrograman Berorientasi Objek (OOP), khususnya:
+Selain pengelolaan data barang, program ini menerapkan konsep abstraksi, inheritance, polimorfisme, duck typing, dan operator overloading.
 
-- Class dan Object
-- Encapsulation
-- Inheritance
-- Superclass dan Subclass
-- `super().__init__()`
-- Method Overriding
-- Protected Attribute
-- Private Attribute
-- Asosiasi
-- Agregasi
-- Komposisi
+## 2. Class Diagram
 
-Program menggunakan beberapa class utama, yaitu `Barang`, `BarangElektronik`, `BarangPribadi`, `Kamar`, `CatatanBarang`, dan `Penghuni`.
+Class diagram menggambarkan struktur kelas, atribut, method, serta hubungan antarkelas dalam Sistem Pendataan Barang di Kamar Kos.
 
----
+Masukkan gambar class diagram pada bagian ini dengan nama file `class_diagram.png`.
 
-## 2. Tujuan Program
+![Class Diagram Sistem Pendataan Barang di Kamar Kos](class_diagram.png)
 
-Tujuan dari program ini adalah:
+### 2.1 Penjelasan Relasi Antarkelas
 
-1. Mendata barang yang terdapat di dalam kamar kos.
-2. Membedakan jenis barang berdasarkan karakteristiknya.
-3. Menerapkan konsep inheritance pada class barang.
-4. Menerapkan hubungan asosiasi, agregasi, dan komposisi.
-5. Menerapkan protected dan private attribute.
-6. Menerapkan method overriding.
-7. Menunjukkan hubungan antar class dalam sebuah sistem sederhana.
+**a. Asosiasi (Association)**
 
-## 3. Superclass dan Subclass
+Asosiasi merupakan hubungan antara dua kelas yang saling berinteraksi. Pada program ini, kelas `Penghuni` berhubungan dengan kelas `Kamar` melalui method `tempati_kamar(kamar)`. Method tersebut menampilkan informasi nama penghuni, NIM, nomor kamar, dan nama kamar yang ditempati.
 
-### 3.1 Superclass Barang
+Objek `Penghuni` dan `Kamar` dibuat secara terpisah sehingga keduanya tidak bergantung pada satu sama lain untuk keberadaan objeknya.
 
-Class `Barang` digunakan sebagai parent class atau superclass.
+**b. Agregasi (Aggregation)**
 
-Atribut yang dimiliki:
+Agregasi diterapkan pada hubungan antara kelas `Kamar` dan kelas `Barang`. Kelas `Kamar` menyimpan kumpulan objek barang melalui atribut `barang_list`.
 
-- `kode_barang`
-- `nama_barang`
-- `_stok`
-- `__kode_internal`
+Method `tambah_barang(barang)` digunakan untuk menambahkan objek barang ke dalam daftar kamar. Barang merupakan objek tersendiri sehingga dapat tetap ada meskipun sudah dikeluarkan dari daftar barang kamar.
 
-Method yang dimiliki antara lain:
+**c. Komposisi (Composition)**
 
-- `tambah_stok()`
-- `kurangi_stok()`
-- `tampilkan_info()`
-- `cek_kode_internal()`
+Komposisi diterapkan pada hubungan antara kelas `Kamar` dan kelas `CatatanBarang`. Kelas `Kamar` menyimpan kumpulan catatan melalui atribut `catatan_list`.
 
-### 3.2 Subclass BarangElektronik
+Method `tambah_catatan(keterangan)` membuat objek `CatatanBarang`, kemudian menyimpannya ke dalam daftar catatan kamar. Dalam rancangan program ini, catatan diperlakukan sebagai bagian dari data kamar.
 
-`BarangElektronik` merupakan subclass dari `Barang`.
+**d. Inheritance (Pewarisan)**
 
-```python
-class BarangElektronik(Barang):
-```
+Pewarisan diterapkan melalui kelas abstrak `Barang` sebagai kelas induk. Kelas `BarangElektronik` dan `BarangPribadi` merupakan kelas turunan yang mewarisi atribut dan method dari kelas `Barang`.
 
-Class ini memiliki atribut khusus:
+Kedua kelas turunan menggunakan `super().__init__()` untuk memanggil konstruktor kelas induk serta mengimplementasikan method abstrak yang diwajibkan.
 
-```python
-daya_watt
-```
+**e. Duck Typing**
 
-Contoh barang:
+Duck typing diterapkan pada kelas `LaporanTeks` dan `NotifikasiKonsol`. Kedua kelas tidak saling mewarisi, tetapi memiliki method dengan nama yang sama, yaitu `kirim()`.
 
-- Laptop
-- Kipas Angin
+Fungsi `proses_pesan(objek)` dapat memproses objek dari kedua kelas tersebut karena keduanya menyediakan method `kirim()`.
 
-Subclass menggunakan konstruktor superclass dengan:
+## 3. Penerapan Abstraksi dan Polimorfisme
 
-```python
-super().__init__(kode_barang, nama_barang, stok)
-```
+### 3.1 Abstraksi (Abstraction)
 
-### 3.3 Subclass BarangPribadi
+Abstraksi diterapkan pada kelas `Barang` dengan menggunakan modul `abc`, yaitu melalui pewarisan `ABC` dan dekorator `@abstractmethod`.
 
-`BarangPribadi` juga merupakan subclass dari `Barang`.
+Kelas `Barang` memiliki dua method abstrak:
 
-```python
-class BarangPribadi(Barang):
-```
+1. `tampilkan_info()`
+2. `kategori()`
 
-Class ini memiliki atribut khusus:
+Method tersebut harus diimplementasikan oleh kelas turunan, yaitu `BarangElektronik` dan `BarangPribadi`.
 
-```python
-bahan
-```
+Kelas `Barang` tidak dapat diinstansiasi secara langsung karena masih memiliki method abstrak yang belum diimplementasikan. Pengujian dilakukan melalui fungsi `uji_abstract_class()` dengan mencoba membuat objek menggunakan perintah:
 
-Contoh barang:
+`Barang("X001", "Barang abstrak", 1)`
 
-- Tas Kuliah
-- Barang pribadi lainnya
+Percobaan tersebut menghasilkan `TypeError`, kemudian kesalahan ditangkap menggunakan `try-except` dan ditampilkan sebagai bukti bahwa kelas abstrak tidak dapat dibuat menjadi objek secara langsung.
 
-Subclass juga menggunakan:
+### 3.2 Polimorfisme (Polymorphism)
 
-```python
-super().__init__(kode_barang, nama_barang, stok)
-```
+Polimorfisme diterapkan melalui method `tampilkan_info()` dan `kategori()` pada kelas `BarangElektronik` dan `BarangPribadi`.
 
----
+Kedua kelas memiliki method dengan nama yang sama, tetapi implementasinya berbeda sesuai dengan jenis barang.
 
-## 4. Penggunaan Inheritance
+- Kelas `BarangElektronik` menampilkan kode barang, nama barang, stok, dan daya listrik dalam satuan watt.
+- Kelas `BarangPribadi` menampilkan kode barang, nama barang, stok, dan bahan barang.
 
-Inheritance digunakan karena `BarangElektronik` dan `BarangPribadi` merupakan jenis dari `Barang`.
+Polimorfisme ditunjukkan dalam fungsi `demonstrasi(kamar, penghuni)`, ketika program melakukan perulangan terhadap `kamar.barang_list` dan memanggil method `tampilkan_info()` pada setiap objek barang. Dengan demikian, setiap objek menampilkan informasi sesuai dengan kelasnya.
 
-Hubungannya:
+### 3.3 Duck Typing
 
-```text
-BarangElektronik adalah Barang
-BarangPribadi adalah Barang
-```
+Duck typing ditunjukkan melalui fungsi `proses_pesan(objek)` yang menjalankan method `objek.kirim()`.
 
-Dengan inheritance, kedua subclass dapat menggunakan atribut dan method yang dimiliki oleh superclass.
+Fungsi tersebut dapat menerima objek `LaporanTeks` maupun `NotifikasiKonsol`. Meskipun kedua kelas tidak memiliki hubungan pewarisan, keduanya dapat diproses karena menyediakan method `kirim()`.
 
----
+### 3.4 Operator Overloading
 
-## 5. Penggunaan super()
+Operator overloading diterapkan melalui dua special method pada kelas `Barang`.
 
-Pada setiap subclass digunakan:
+1. `__str__()` digunakan untuk menentukan bentuk teks ketika objek barang ditampilkan menggunakan `str(barang)`.
+2. `__eq__()` digunakan untuk membandingkan dua objek barang berdasarkan kesamaan nilai `kode_barang` menggunakan operator `==`.
 
-```python
-super().__init__(kode_barang, nama_barang, stok)
-```
+Penerapan tersebut ditunjukkan pada fungsi `demonstrasi()` dengan membuat salinan objek menggunakan `copy(barang)`, kemudian membandingkan objek asli dan salinannya.
 
-`super()` digunakan untuk memanggil konstruktor milik superclass `Barang`.
+## 4. Fitur Program
 
-Dengan demikian atribut umum seperti `kode_barang`, `nama_barang`, dan `_stok` tidak perlu ditulis ulang pada subclass.
+Program Sistem Pendataan Barang di Kamar Kos memiliki beberapa fitur yang dijalankan secara otomatis, yaitu:
 
----
+1. Menampilkan data barang yang terdapat di kamar.
+2. Mencari barang berdasarkan kode barang.
+3. Menambahkan barang baru ke dalam daftar kamar.
+4. Memperbarui jumlah stok barang.
+5. Menampilkan catatan kamar.
+6. Menambahkan catatan baru pada kamar.
+7. Menghapus barang dari daftar kamar.
+8. Menampilkan informasi penghuni dan kamar yang ditempati.
+9. Mendemonstrasikan inheritance dan polimorfisme.
+10. Mendemonstrasikan duck typing dan operator overloading.
+11. Menguji abstraksi dengan membuktikan bahwa kelas `Barang` tidak dapat diinstansiasi secara langsung.
 
-## 6. Method Overriding
+## 5. Screenshot Output Program
 
-Method `tampilkan_info()` terdapat pada superclass `Barang`.
+Screenshot digunakan sebagai bukti bahwa program berhasil dijalankan dan konsep OOP telah diterapkan sesuai rancangan.
 
-Kemudian method tersebut didefinisikan kembali pada subclass.
+### 5.1 Screenshot Output Utama
 
-Contoh:
+screenshot hasil menjalankan program yang memperlihatkan judul program, data barang, proses pencarian barang, penambahan barang, pembaruan stok, dan pengelolaan catatan kamar.
 
-```python
-def tampilkan_info(self):
-    print("=== Barang Elektronik ===")
-```
+## 6. Kesimpulan
 
-dan:
+Sistem Pendataan Barang di Kamar Kos merupakan program Python yang menerapkan konsep Object-Oriented Programming untuk mengelola data barang secara terstruktur. Abstraksi diterapkan melalui kelas `Barang`, sedangkan inheritance diterapkan melalui kelas `BarangElektronik` dan `BarangPribadi`.
 
-```python
-def tampilkan_info(self):
-    print("=== Barang Pribadi ===")
-```
+Polimorfisme ditunjukkan melalui implementasi method `tampilkan_info()` dan `kategori()` yang memiliki perilaku berbeda sesuai jenis barang. Duck typing diterapkan pada kelas `LaporanTeks` dan `NotifikasiKonsol` melalui method `kirim()`. Selain itu, program menerapkan operator overloading melalui method `__str__()` dan `__eq__()`.
 
-Dengan overriding, setiap subclass dapat menampilkan informasi sesuai karakteristik barangnya masing-masing.
-
----
-
-## 7. Protected Attribute
-
-Program menggunakan atribut protected:
-
-```python
-self._stok = stok
-```
-
-Atribut `_stok` digunakan sebagai protected karena data stok perlu diakses oleh subclass.
-
-Contohnya pada `BarangElektronik`:
-
-```python
-print(f"Stok        : {self._stok}")
-```
-
----
-
-## 8. Private Attribute
-
-Program juga menggunakan private attribute:
-
-```python
-self.__kode_internal = "INTERNAL-" + kode_barang
-```
-
-Atribut tersebut hanya dapat digunakan secara langsung dari dalam class `Barang`.
-
-Untuk mengaksesnya digunakan method:
-
-```python
-def cek_kode_internal(self):
-    return self.__kode_internal
-```
-
-Private attribute digunakan untuk menunjukkan data yang bersifat internal pada superclass.
-
----
-
-# 9. Relasi UML
-
-Program menerapkan tiga relasi UML yang diwajibkan, yaitu:
-
-1. Asosiasi
-2. Agregasi
-3. Komposisi
-
-Selain ketiga relasi tersebut, program juga menerapkan inheritance.
-
----
-
-## 9.1 Asosiasi
-
-Asosiasi diterapkan antara:
-
-```text
-Penghuni → Kamar
-```
-
-Penghuni menggunakan objek `Kamar` melalui method:
-
-```python
-def tempati_kamar(self, kamar):
-```
-
-Contoh penggunaan:
-
-```python
-meilonie.tempati_kamar(kamar101)
-```
-
-Objek `Kamar` diberikan sebagai parameter kepada method `tempati_kamar()`.
-
-Relasi ini merupakan asosiasi karena `Penghuni` menggunakan `Kamar` tanpa membuat objek `Kamar` di dalam class `Penghuni`.
-
----
-
-## 9.2 Agregasi
-
-Agregasi diterapkan antara:
-
-```text
-Kamar ◇── Barang
-```
-
-Barang dibuat di luar class `Kamar`.
-
-Contohnya:
-
-```python
-laptop = BarangElektronik("B001", "Laptop", 1, 65)
-```
-
-Kemudian barang dimasukkan ke dalam kamar:
-
-```python
-kamar101.tambah_barang(laptop)
-```
-
-Barang disimpan pada:
-
-```python
-self.barang_list = []
-```
-
-Karena barang dibuat secara mandiri sebelum dimasukkan ke kamar, hubungan ini merupakan agregasi.
-
----
-
-## 9.3 Komposisi
-
-Komposisi diterapkan antara:
-
-```text
-Kamar ◆── CatatanBarang
-```
-
-Objek `CatatanBarang` dibuat langsung di dalam class `Kamar`.
-
-Contohnya:
-
-```python
-catatan = CatatanBarang(id_catatan, keterangan)
-```
-
-Kemudian dimasukkan ke:
-
-```python
-self.catatan_list.append(catatan)
-```
-
-Dengan demikian `CatatanBarang` merupakan bagian dari `Kamar` dan dibuat oleh `Kamar`.
-
----
-
-# 10. Diagram UML Sederhana
-
-```text
-                         +----------------------+
-                         |       Barang         |
-                         +----------------------+
-                         | kode_barang          |
-                         | nama_barang          |
-                         | # _stok              |
-                         | - __kode_internal    |
-                         +----------------------+
-                         | tambah_stok()        |
-                         | kurangi_stok()       |
-                         | tampilkan_info()     |
-                         +----------------------+
-                              △          △
-                              |          |
-                 +------------+          +-------------+
-                 |                                     |
-    +-------------------------+           +-------------------------+
-    |   BarangElektronik      |           |     BarangPribadi       |
-    +-------------------------+           +-------------------------+
-    | daya_watt               |           | bahan                   |
-    +-------------------------+           +-------------------------+
-    | tampilkan_info()        |           | tampilkan_info()        |
-    +-------------------------+           +-------------------------+
-
-
-+-------------------+          +-------------------+
-|     Penghuni      |          |       Kamar       |
-+-------------------+          +-------------------+
-| nama              |          | nomor_kamar       |
-| nim               |          | nama_kamar        |
-+-------------------+          | barang_list       |
-| tempati_kamar()   |          | catatan_list      |
-+-------------------+          +-------------------+
-          |                         /       \
-          |                        /         \
-       asosiasi               agregasi     komposisi
-          |                    ◇ /             \ ◆
-          +----------------> Barang       CatatanBarang
-```
-
----
-
-# 11. Contoh Objek
-
-```python
-laptop = BarangElektronik(
-    "B001",
-    "Laptop",
-    1,
-    65
-)
-```
-
-```python
-kipas = BarangElektronik(
-    "B002",
-    "Kipas Angin",
-    2,
-    45
-)
-```
-
-```python
-tas = BarangPribadi(
-    "B003",
-    "Tas Kuliah",
-    1,
-    "Kanvas"
-)
-```
-
-Objek kamar:
-
-```python
-kamar101 = Kamar(
-    "101",
-    "Kamar Meilonie"
-)
-```
-
-Objek penghuni:
-
-```python
-meilonie = Penghuni(
-    "Meilonie",
-    "128"
-)
-```
-
----
-
-# 12. Contoh Proses Program
-
-### Asosiasi
-
-```python
-meilonie.tempati_kamar(kamar101)
-```
-
-Output:
-
-```text
-Meilonie (NIM 128) menempati kamar 101 (Kamar Meilonie).
-```
-
-### Agregasi
-
-```python
-kamar101.tambah_barang(laptop)
-```
-
-Output:
-
-```text
-Laptop berhasil ditambahkan ke kamar 101.
-```
-
-### Komposisi
-
-```python
-kamar101.tambah_catatan(
-    "Laptop digunakan untuk kuliah."
-)
-```
-
-Output:
-
-```text
-Catatan barang berhasil ditambahkan.
-```
-
-### Inheritance
-
-```python
-laptop.tampilkan_info()
-```
-
-Output:
-
-```text
-=== Barang Elektronik ===
-Kode Barang : B001
-Nama Barang : Laptop
-Stok        : 1
-Daya        : 65 Watt
-```
-
----
-
-# 13. Pengujian Inheritance
-
-Program juga melakukan pengujian:
-
-```python
-isinstance(laptop, Barang)
-```
-
-Hasil:
-
-```text
-True
-```
-
-Artinya objek `laptop` merupakan objek dari `BarangElektronik` sekaligus merupakan `Barang`.
-
-Pengujian subclass:
-
-```python
-issubclass(BarangElektronik, Barang)
-```
-
-Hasil:
-
-```text
-True
-```
-
-Begitu juga:
-
-```python
-issubclass(BarangPribadi, Barang)
-```
-
-Hasil:
-
-```text
-True
-```
-
----
-
-# 14. Kesimpulan
-
-Program Sistem Pendataan Barang di Kamar Kos telah menerapkan konsep Pemrograman Berorientasi Objek sesuai dengan materi yang dipelajari.
-
-Konsep inheritance diterapkan menggunakan `Barang` sebagai superclass dan `BarangElektronik` serta `BarangPribadi` sebagai subclass. Kedua subclass menggunakan `super().__init__()`, mempunyai atribut khusus, serta melakukan method overriding pada method `tampilkan_info()`.
-
-Program juga menerapkan protected attribute `_stok` dan private attribute `__kode_internal`.
-
-Selain inheritance, program menerapkan tiga relasi UML, yaitu asosiasi antara `Penghuni` dan `Kamar`, agregasi antara `Kamar` dan `Barang`, serta komposisi antara `Kamar` dan `CatatanBarang`.
-
-Dengan penerapan tersebut, program dapat menunjukkan hubungan antar objek dan hubungan pewarisan antar class dalam sebuah sistem pendataan barang di kamar kos.
+Melalui penerapan konsep tersebut, program menunjukkan bagaimana kelas dan objek dapat digunakan untuk membangun sistem pendataan barang yang terstruktur, mudah dikembangkan, dan sesuai dengan prinsip dasar OOP.
