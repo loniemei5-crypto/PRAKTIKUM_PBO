@@ -40,28 +40,9 @@ Tujuan dari program ini adalah:
 6. Menerapkan method overriding.
 7. Menunjukkan hubungan antar class dalam sebuah sistem sederhana.
 
----
+## 3. Superclass dan Subclass
 
-## 3. Struktur Class
-
-```text
-Barang
-├── BarangElektronik
-└── BarangPribadi
-
-Kamar
-└── CatatanBarang
-
-Penghuni
-```
-
-`Barang` merupakan superclass, sedangkan `BarangElektronik` dan `BarangPribadi` merupakan subclass.
-
----
-
-## 4. Superclass dan Subclass
-
-### 4.1 Superclass Barang
+### 3.1 Superclass Barang
 
 Class `Barang` digunakan sebagai parent class atau superclass.
 
@@ -79,7 +60,7 @@ Method yang dimiliki antara lain:
 - `tampilkan_info()`
 - `cek_kode_internal()`
 
-### 4.2 Subclass BarangElektronik
+### 3.2 Subclass BarangElektronik
 
 `BarangElektronik` merupakan subclass dari `Barang`.
 
@@ -104,7 +85,7 @@ Subclass menggunakan konstruktor superclass dengan:
 super().__init__(kode_barang, nama_barang, stok)
 ```
 
-### 4.3 Subclass BarangPribadi
+### 3.3 Subclass BarangPribadi
 
 `BarangPribadi` juga merupakan subclass dari `Barang`.
 
@@ -131,7 +112,7 @@ super().__init__(kode_barang, nama_barang, stok)
 
 ---
 
-## 5. Penggunaan Inheritance
+## 4. Penggunaan Inheritance
 
 Inheritance digunakan karena `BarangElektronik` dan `BarangPribadi` merupakan jenis dari `Barang`.
 
@@ -146,7 +127,7 @@ Dengan inheritance, kedua subclass dapat menggunakan atribut dan method yang dim
 
 ---
 
-## 6. Penggunaan super()
+## 5. Penggunaan super()
 
 Pada setiap subclass digunakan:
 
@@ -160,7 +141,7 @@ Dengan demikian atribut umum seperti `kode_barang`, `nama_barang`, dan `_stok` t
 
 ---
 
-## 7. Method Overriding
+## 6. Method Overriding
 
 Method `tampilkan_info()` terdapat pada superclass `Barang`.
 
@@ -184,7 +165,7 @@ Dengan overriding, setiap subclass dapat menampilkan informasi sesuai karakteris
 
 ---
 
-## 8. Protected Attribute
+## 7. Protected Attribute
 
 Program menggunakan atribut protected:
 
@@ -202,7 +183,7 @@ print(f"Stok        : {self._stok}")
 
 ---
 
-## 9. Private Attribute
+## 8. Private Attribute
 
 Program juga menggunakan private attribute:
 
@@ -223,7 +204,7 @@ Private attribute digunakan untuk menunjukkan data yang bersifat internal pada s
 
 ---
 
-# 10. Relasi UML
+# 9. Relasi UML
 
 Program menerapkan tiga relasi UML yang diwajibkan, yaitu:
 
@@ -235,7 +216,7 @@ Selain ketiga relasi tersebut, program juga menerapkan inheritance.
 
 ---
 
-## 10.1 Asosiasi
+## 9.1 Asosiasi
 
 Asosiasi diterapkan antara:
 
@@ -261,7 +242,7 @@ Relasi ini merupakan asosiasi karena `Penghuni` menggunakan `Kamar` tanpa membua
 
 ---
 
-## 10.2 Agregasi
+## 9.2 Agregasi
 
 Agregasi diterapkan antara:
 
@@ -293,7 +274,7 @@ Karena barang dibuat secara mandiri sebelum dimasukkan ke kamar, hubungan ini me
 
 ---
 
-## 10.3 Komposisi
+## 9.3 Komposisi
 
 Komposisi diterapkan antara:
 
@@ -319,7 +300,7 @@ Dengan demikian `CatatanBarang` merupakan bagian dari `Kamar` dan dibuat oleh `K
 
 ---
 
-# 11. Diagram UML Sederhana
+# 10. Diagram UML Sederhana
 
 ```text
                          +----------------------+
@@ -364,7 +345,7 @@ Dengan demikian `CatatanBarang` merupakan bagian dari `Kamar` dan dibuat oleh `K
 
 ---
 
-# 12. Contoh Objek
+# 11. Contoh Objek
 
 ```python
 laptop = BarangElektronik(
@@ -413,7 +394,7 @@ meilonie = Penghuni(
 
 ---
 
-# 13. Contoh Proses Program
+# 12. Contoh Proses Program
 
 ### Asosiasi
 
@@ -471,7 +452,7 @@ Daya        : 65 Watt
 
 ---
 
-# 14. Pengujian Inheritance
+# 13. Pengujian Inheritance
 
 Program juga melakukan pengujian:
 
@@ -513,7 +494,7 @@ True
 
 ---
 
-# 15. Kesimpulan
+# 14. Kesimpulan
 
 Program Sistem Pendataan Barang di Kamar Kos telah menerapkan konsep Pemrograman Berorientasi Objek sesuai dengan materi yang dipelajari.
 
